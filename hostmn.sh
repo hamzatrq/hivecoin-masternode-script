@@ -11,7 +11,7 @@ COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='HIVE Network'
 COIN_PORT=1234
 RPC_PORT=5523
-
+COINKEY=$1
 
 NODEIP=$(curl -s4 api.ipify.org)
 
@@ -19,7 +19,6 @@ NODEIP=$(curl -s4 api.ipify.org)
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
-
 
 function download_node() {
   echo -e "Preparing to download ${GREEN}$COIN_NAME${NC}."
@@ -95,14 +94,6 @@ port=$COIN_PORT
 EOF
 }
 
-function create_key() {
-  COINKEY=$1
-  if [[ -z "$COINKEY" ]]; then
-   echo "Please enter a valid key" >> log.txt
-   exit 1
-  fi
-}
-
 function update_config() {
   cat << EOF >> $CONFIGFOLDER/$CONFIG_FILE
 logintimestamps=1
@@ -161,6 +152,11 @@ fi
 
 
 function checks() {
+if [[ -z "$COINKEY" ]]; then
+  echo "Please enter a valid key" >> log.txt
+  exit 1
+fi
+
 if [[ $(lsb_release -d) != *1[46].04* ]]; then
   echo -e "${RED}You are not running Ubuntu 14.04 or 16.04. Installation is cancelled.${NC}"
   exit 1
@@ -227,7 +223,6 @@ function important_information() {
 function setup_node() {
   get_ip
   create_config
-  create_key
   update_config
   enable_firewall
   important_information
@@ -236,7 +231,6 @@ function setup_node() {
 
 ##### Main #####
 clear
-
 checks
 prepare_system
 download_node

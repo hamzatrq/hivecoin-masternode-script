@@ -6,7 +6,7 @@ CONFIGFOLDER='/root/.hive'
 COIN_PATH='/usr/local/bin/'
 COIN_DAEMON='hived'
 COIN_CLI='hive-cli'
-COIN_TGZ='https://github.com/hamzatrq/hivecoin-masternode-script.git'
+COIN_TGZ='https://github.com/HIVENetwork1/HIVE/releases/download/v1.0/hive-linux.zip'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='HIVE Network'
 COIN_PORT=1234
@@ -64,7 +64,7 @@ WantedBy=multi-user.target
 EOF
 
   systemctl daemon-reload
-  sleep 3
+  sleep 10
   systemctl start hive-network.service
   systemctl enable hive-network.service >/dev/null 2>&1
 
@@ -204,20 +204,20 @@ clear
 }
 
 function important_information() {
- echo -e "================================================================================================================================"
- echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}."
- echo -e "Configuration file is: ${RED}$CONFIGFOLDER/$CONFIG_FILE${NC}"
- echo -e "Start: ${RED}systemctl start $COIN_NAME.service${NC}"
- echo -e "Stop: ${RED}systemctl stop $COIN_NAME.service${NC}"
- echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT${NC}"
- echo -e "MASTERNODE PRIVATEKEY is: ${RED}$COINKEY${NC}"
- echo -e "Please check ${RED}$COIN_NAME${NC} daemon is running with the following command: ${RED}systemctl status $COIN_NAME.service${NC}"
- echo -e "Use ${RED}$COIN_CLI masternode status${NC} to check your MN."
+ echo -e "================================================================================================================================" >> log.txt
+ echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}." >> log.txt
+ echo -e "Configuration file is: ${RED}$CONFIGFOLDER/$CONFIG_FILE${NC}" >> log.txt
+ echo -e "Start: ${RED}systemctl start hive-network.service${NC}" >> log.txt
+ echo -e "Stop: ${RED}systemctl stop hive-network.service${NC}" >> log.txt
+ echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT${NC}" >> log.txt
+ echo -e "MASTERNODE PRIVATEKEY is: ${RED}$COINKEY${NC}" >> log.txt
+ echo -e "Please check ${RED}$COIN_NAME${NC} daemon is running with the following command: ${RED}systemctl status hive-network.service${NC}" >> log.txt
+ echo -e "Use ${RED}$COIN_CLI masternode status${NC} to check your MN." >> log.txt
 #  if [[ -n $SENTINEL_REPO  ]]; then
 #   echo -e "${RED}Sentinel${NC} is installed in ${RED}$CONFIGFOLDER/sentinel${NC}"
 #   echo -e "Sentinel logs is: ${RED}$CONFIGFOLDER/sentinel.log${NC}"
 #  fi
- echo -e "================================================================================================================================"
+ echo -e "================================================================================================================================" >> log.txt
 }
 
 function setup_node() {

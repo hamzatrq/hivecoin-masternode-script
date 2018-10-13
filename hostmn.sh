@@ -26,7 +26,7 @@ function download_node() {
   apt install zip unzip >/dev/null 2>&1
   wget -q $COIN_TGZ
   compile_error
-  unzip hive.zip 
+  unzip  hive-linux.zip 
   cd hive
   cp -r * /usr/local/bin/
 #   tar xvzf $COIN_ZIP -C $COIN_PATH >/dev/null 2>&1
